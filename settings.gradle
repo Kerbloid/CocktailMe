@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "CocktailMe"
 include ':app'
+include ':domain'
+include ':data'
