@@ -16,6 +16,9 @@ class RandomCocktailsViewModel(
     private val _dataLoading = MutableLiveData(true)
     val dataLoading: LiveData<Boolean> = _dataLoading
 
+    private val _dataUpdating = MutableLiveData(false)
+    val dataUpdating: LiveData<Boolean> = _dataUpdating
+
     private val _cocktails = MutableLiveData<List<Cocktail>>()
     val cocktails = _cocktails
 
@@ -26,7 +29,6 @@ class RandomCocktailsViewModel(
 
     fun getRandomCocktails() {
         viewModelScope.launch {
-            _dataLoading.postValue(true)
             when (val drinkResult = getRandomCocktailsUseCase.getRandomCocktails()) {
                 is Result.Success -> {
                     _remoteDrinks.clear()
@@ -37,6 +39,26 @@ class RandomCocktailsViewModel(
 
                 is Result.Error -> {
                     _dataLoading.postValue(false)
+                    cocktails.value = emptyList()
+                    _error.postValue(drinkResult.exception.message)
+                }
+            }
+        }
+    }
+
+    fun updateRandomCocktails() {
+        viewModelScope.launch {
+            _dataUpdating.postValue(true)
+            when (val drinkResult = getRandomCocktailsUseCase.getRandomCocktails()) {
+                is Result.Success -> {
+                    _remoteDrinks.clear()
+                    _remoteDrinks.addAll(drinkResult.data)
+                    cocktails.value = mapper.fromDrinkToCocktail(_remoteDrinks)
+                    _dataUpdating.postValue(false)
+                }
+
+                is Result.Error -> {
+                    _dataUpdating.postValue(false)
                     cocktails.value = emptyList()
                     _error.postValue(drinkResult.exception.message)
                 }

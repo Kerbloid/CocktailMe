@@ -9,7 +9,7 @@
         android:id="@+id/random_cocktails"
         android:name="com.example.cocktailme.presentation.ui.randomCocktails.RandomCocktailsFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_random_cocktails" />
 
     <fragment
         android:id="@+id/navigation_dashboard"

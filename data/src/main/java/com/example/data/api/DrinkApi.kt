@@ -1,7 +1,6 @@
 package com.example.data.api
 
 import com.example.domain.entities.Drink
-import com.example.domain.entities.DrinkList
 import retrofit2.Response
 import retrofit2.http.GET
 

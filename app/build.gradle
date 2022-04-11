@@ -78,4 +78,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutines_adapter_version"
 
+    //Swipe layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
 }

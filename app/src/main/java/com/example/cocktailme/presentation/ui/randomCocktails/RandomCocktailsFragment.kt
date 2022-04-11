@@ -10,13 +10,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cocktailme.databinding.FragmentHomeBinding
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.cocktailme.databinding.FragmentRandomCocktailsBinding
 import com.example.cocktailme.presentation.LayoutUtils
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RandomCocktailsFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentRandomCocktailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var cocktailsAdapter: CocktailsAdapter
 
@@ -33,10 +34,21 @@ class RandomCocktailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentRandomCocktailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val recyclerView: RecyclerView = binding.rvBooks
         val progress: ProgressBar = binding.pbLoading
+        val swipeRefresh: SwipeRefreshLayout = binding.swipeRefreshLayout
+
+        recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext())
+            adapter = cocktailsAdapter
+        }
+
+        swipeRefresh.setOnRefreshListener {
+            viewModel.updateRandomCocktails()
+        }
 
         viewModel.cocktails.observe(viewLifecycleOwner) {
             cocktailsAdapter.submitUpdate(it)
@@ -48,11 +60,8 @@ class RandomCocktailsFragment : Fragment() {
                 false -> LayoutUtils.crossFade(recyclerView, progress)
             }
         }
-
-        recyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext())
-            adapter = cocktailsAdapter
+        viewModel.dataUpdating.observe(viewLifecycleOwner) { loading ->
+            swipeRefresh.isRefreshing = loading
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
