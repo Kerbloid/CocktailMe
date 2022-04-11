@@ -1,4 +1,4 @@
-package com.example.cocktailme.ui.dashboard
+package com.example.cocktailme.presentation.ui.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

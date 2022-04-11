@@ -1,7 +1,6 @@
-package com.example.cocktailme.ui.home
+package com.example.cocktailme.presentation.ui.randomCocktails
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocktailme.R
-import com.example.cocktailme.entities.Cocktail
+import com.example.cocktailme.presentation.entities.Cocktail
 
-class DrinksAdapter (
+class CocktailsAdapter (
     private val context: Context
 //    ,
 //    private val listener: ActionClickListener
 ) :
-    RecyclerView.Adapter<DrinksAdapter.ViewHolder>() {
+    RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
 
     private val cocktails: ArrayList<Cocktail> = arrayListOf()
 
@@ -29,7 +28,7 @@ class DrinksAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.item_drink,
+                R.layout.item_cocktail,
                 parent,
                 false
             )
@@ -38,7 +37,6 @@ class DrinksAdapter (
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         cocktails[position].also { cocktail ->
-            Log.d("SASA", "cocktail: $cocktail")
             with(holder) {
                 Glide.with(context)
                     .load(cocktail.image)

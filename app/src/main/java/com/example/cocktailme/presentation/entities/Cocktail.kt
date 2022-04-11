@@ -1,4 +1,4 @@
-package com.example.cocktailme.entities
+package com.example.cocktailme.presentation.entities
 
 data class Cocktail(
     val id: String? = null,

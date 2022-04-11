@@ -1,4 +1,4 @@
-package com.example.cocktailme
+package com.example.cocktailme.presentation
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

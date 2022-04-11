@@ -1,7 +1,7 @@
-package com.example.cocktailme.mappers
+package com.example.cocktailme.presentation.mappers
 
 import android.util.Log
-import com.example.cocktailme.entities.Cocktail
+import com.example.cocktailme.presentation.entities.Cocktail
 import com.example.domain.entities.Drink
 
 class CocktailMapper {
@@ -10,7 +10,6 @@ class CocktailMapper {
     ): List<Cocktail> {
         val cocktails = arrayListOf<Cocktail>()
         drinks.forEach { drink ->
-            Log.d("SASA", "drink: $drink")
             with(drink) {
                 cocktails.add(
                     Cocktail(

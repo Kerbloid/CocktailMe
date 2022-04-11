@@ -3,7 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -55,11 +54,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutines_adapter_version"
-
-    //Hilt
-    implementation("com.google.dagger:hilt-android:$hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_extensions_version")
 
     //GSON
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'

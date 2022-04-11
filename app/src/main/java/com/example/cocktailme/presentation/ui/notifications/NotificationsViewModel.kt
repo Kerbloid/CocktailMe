@@ -1,4 +1,4 @@
-package com.example.cocktailme.ui.notifications
+package com.example.cocktailme.presentation.ui.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

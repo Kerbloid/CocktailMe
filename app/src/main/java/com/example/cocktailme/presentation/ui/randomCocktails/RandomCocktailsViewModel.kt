@@ -1,14 +1,14 @@
-package com.example.cocktailme.ui.home
+package com.example.cocktailme.presentation.ui.randomCocktails
 
 import androidx.lifecycle.*
-import com.example.cocktailme.entities.Cocktail
-import com.example.cocktailme.mappers.CocktailMapper
+import com.example.cocktailme.presentation.entities.Cocktail
+import com.example.cocktailme.presentation.mappers.CocktailMapper
 import com.example.domain.entities.Drink
 import com.example.domain.usecases.GetRandomCocktailsUseCase
 import kotlinx.coroutines.launch
 import com.example.domain.common.Result
 
-class HomeViewModel(
+class RandomCocktailsViewModel(
     private val getRandomCocktailsUseCase: GetRandomCocktailsUseCase,
     private val mapper: CocktailMapper
 ) : ViewModel() {
@@ -55,19 +55,4 @@ class HomeViewModel(
 //            unbookmarkBookUseCase.invoke(mapper.fromBookWithStatusToVolume(book))
 //        }
 //    }
-
-    class HomeViewModelFactory(
-        private val getRandomCocktailsUseCase: GetRandomCocktailsUseCase,
-        private val mapper: CocktailMapper
-    ) :
-        ViewModelProvider.NewInstanceFactory() {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(
-                getRandomCocktailsUseCase,
-                mapper
-            ) as T
-        }
-    }
 }
