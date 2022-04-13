@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">CocktailMe</string>
-    <string name="title_home">Random cocktails</string>
+    <string name="title_cocktails">Cocktails</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="text_random">Random</string>
+    <string name="text_popular">Popular</string>
+    <string name="text_latest">Latest</string>
 </resources>

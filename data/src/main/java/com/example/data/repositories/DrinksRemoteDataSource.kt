@@ -5,4 +5,6 @@ import com.example.domain.entities.Drink
 
 interface DrinksRemoteDataSource {
     suspend fun getRandomDrinks(): Result<List<Drink>>
+    suspend fun getPopular(): Result<List<Drink>>
+    suspend fun getLatest(): Result<List<Drink>>
 }

@@ -1,4 +1,4 @@
-package com.example.cocktailme.presentation.ui.randomCocktails
+package com.example.cocktailme.presentation.ui.home
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cocktailme.R
 import com.example.cocktailme.presentation.entities.Cocktail
 
@@ -40,8 +42,9 @@ class CocktailsAdapter (
             with(holder) {
                 Glide.with(context)
                     .load(cocktail.image)
+                    .transform(CenterCrop(), RoundedCorners(25))
                     .into(image)
-                id.text = cocktail.id
+//                id.text = cocktail.id
                 name.text = cocktail.name
             }
 
@@ -76,7 +79,7 @@ class CocktailsAdapter (
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val id: TextView = view.findViewById(R.id.drinkId)
+//        val id: TextView = view.findViewById(R.id.drinkId)
         val name: TextView = view.findViewById(R.id.drinkName)
         val image: ImageView = view.findViewById(R.id.drinkImage)
 //        val ivBookmark: ImageView = view.findViewById(R.id.ivBookmark)

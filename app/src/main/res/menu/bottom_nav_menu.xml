@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/random_cocktails"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/cocktails"
+        android:icon="@drawable/ic_outline_local_bar_24"
+        android:title="@string/title_cocktails" />
 
     <item
         android:id="@+id/navigation_dashboard"
