@@ -9,12 +9,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cocktailme.R
 import com.example.cocktailme.databinding.FragmentRandomCocktailsBinding
+import com.example.cocktailme.presentation.ui.cocktailInfo.CocktailInfoFragment
 import com.example.cocktailme.presentation.ui.common.LayoutUtils
 import com.example.cocktailme.presentation.ui.common.MarginItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeCocktailsFragment : Fragment() {
+class HomeCocktailsFragment : Fragment(), CocktailClickListener {
 
     private var _binding: FragmentRandomCocktailsBinding? = null
     private val binding get() = _binding!!
@@ -26,9 +28,9 @@ class HomeCocktailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        popularCocktailsAdapter = CocktailsAdapter(requireContext())
-        latestCocktailsAdapter = CocktailsAdapter(requireContext())
-        randomCocktailsAdapter = CocktailsAdapter(requireContext())
+        popularCocktailsAdapter = CocktailsAdapter(requireContext(), this)
+        latestCocktailsAdapter = CocktailsAdapter(requireContext(), this)
+        randomCocktailsAdapter = CocktailsAdapter(requireContext(), this)
         viewModel.getPopularCocktails()
     }
 
@@ -122,5 +124,12 @@ class HomeCocktailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onCocktailSelected(id: String) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_activity_main, CocktailInfoFragment(id))
+            .addToBackStack(null)
+            .commit()
     }
 }

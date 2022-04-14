@@ -6,25 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cocktailme.R
-import com.example.cocktailme.presentation.entities.Cocktail
+import com.example.cocktailme.presentation.entities.CocktailItem
 
-class CocktailsAdapter (
-    private val context: Context
-//    ,
-//    private val listener: ActionClickListener
+class CocktailsAdapter(
+    private val context: Context,
+    private val listener: CocktailClickListener
 ) :
     RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
 
-    private val cocktails: ArrayList<Cocktail> = arrayListOf()
+    private val cocktailItems: ArrayList<CocktailItem> = arrayListOf()
 
     override fun getItemCount(): Int {
-        return cocktails.size
+        return cocktailItems.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -38,14 +38,18 @@ class CocktailsAdapter (
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        cocktails[position].also { cocktail ->
+        cocktailItems[position].also { cocktail ->
             with(holder) {
                 Glide.with(context)
-                    .load(cocktail.image)
+                    .load(cocktail.image ?: R.mipmap.ic_launcher_round)
                     .transform(CenterCrop(), RoundedCorners(25))
                     .into(image)
-//                id.text = cocktail.id
-                name.text = cocktail.name
+                alcoholic.text = cocktail.alcoholic ?: "Unknown"
+                name.text = cocktail.name ?: "Unknown"
+            }
+
+            holder.cocktailItem.setOnClickListener {
+                listener.onCocktailSelected(cocktail.id ?: return@setOnClickListener)
             }
 
 //            holder.ivUnbookmark.setOnClickListener {
@@ -69,48 +73,43 @@ class CocktailsAdapter (
         }
     }
 
-    fun submitUpdate(update: List<Cocktail>) {
-        val callback = BooksDiffCallback(cocktails, update)
+    fun submitUpdate(update: List<CocktailItem>) {
+        val callback = BooksDiffCallback(cocktailItems, update)
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(callback)
 
-        cocktails.clear()
-        cocktails.addAll(update)
+        cocktailItems.clear()
+        cocktailItems.addAll(update)
         diffResult.dispatchUpdatesTo(this)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-//        val id: TextView = view.findViewById(R.id.drinkId)
+        val alcoholic: TextView = view.findViewById(R.id.alcoholic)
         val name: TextView = view.findViewById(R.id.drinkName)
         val image: ImageView = view.findViewById(R.id.drinkImage)
-//        val ivBookmark: ImageView = view.findViewById(R.id.ivBookmark)
-//        val ivUnbookmark: ImageView = view.findViewById(R.id.ivUnbookmark)
+        val cocktailItem: ConstraintLayout = view.findViewById(R.id.cocktailItem)
     }
 
     class BooksDiffCallback(
-        private val oldCocktails: List<Cocktail>,
-        private val newCocktails: List<Cocktail>
+        private val oldCocktailItems: List<CocktailItem>,
+        private val newCocktailItems: List<CocktailItem>
     ) :
         DiffUtil.Callback() {
         override fun getOldListSize(): Int {
-            return oldCocktails.size
+            return oldCocktailItems.size
         }
 
         override fun getNewListSize(): Int {
-            return newCocktails.size
+            return newCocktailItems.size
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldCocktails[oldItemPosition].id == newCocktails[newItemPosition].id
+            return oldCocktailItems[oldItemPosition].id == newCocktailItems[newItemPosition].id
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldCocktails[oldItemPosition].name == newCocktails[newItemPosition].name ||
-                    oldCocktails[oldItemPosition].image == newCocktails[newItemPosition].image
+            return oldCocktailItems[oldItemPosition].name == newCocktailItems[newItemPosition].name ||
+                    oldCocktailItems[oldItemPosition].image == newCocktailItems[newItemPosition].image ||
+                    oldCocktailItems[oldItemPosition].alcoholic == newCocktailItems[newItemPosition].alcoholic
         }
     }
-
-//    interface ActionClickListener {
-//        fun bookmark(book: BookWithStatus)
-//        fun unbookmark(book: BookWithStatus)
-//    }
 }

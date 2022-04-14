@@ -18,4 +18,8 @@ class DrinkRepositoryImpl (private val remoteDataSource: DrinksRemoteDataSource)
     override suspend fun getRemoteLatestCocktails(): Result<List<Drink>> {
         return  remoteDataSource.getLatest()
     }
+
+    override suspend fun getRemoteCocktailById(id: String): Result<List<Drink>> {
+        return remoteDataSource.getCocktailById(id)
+    }
 }

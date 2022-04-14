@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cocktailme.presentation.entities.Cocktail
-import com.example.cocktailme.presentation.mappers.CocktailMapper
+import com.example.cocktailme.presentation.entities.CocktailItem
+import com.example.cocktailme.presentation.mappers.CocktailItemMapper
 import com.example.domain.common.Result
 import com.example.domain.entities.Drink
 import com.example.domain.usecases.GetLatestCocktailsUseCase
@@ -17,17 +17,17 @@ class HomeCocktailsViewModel(
     private val getPopularCocktailsUseCase: GetPopularCocktailsUseCase,
     private val getLatestCocktailsUseCase: GetLatestCocktailsUseCase,
     private val getRandomCocktailsUseCase: GetRandomCocktailsUseCase,
-    private val mapper: CocktailMapper
+    private val itemMapper: CocktailItemMapper
 ) : ViewModel() {
 
     private val _dataLoading = MutableLiveData(true)
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _popularCocktails = MutableLiveData<List<Cocktail>>()
+    private val _popularCocktails = MutableLiveData<List<CocktailItem>>()
     val popularCocktails = _popularCocktails
-    private val _latestCocktails = MutableLiveData<List<Cocktail>>()
+    private val _latestCocktails = MutableLiveData<List<CocktailItem>>()
     val latestCocktails = _latestCocktails
-    private val _randomCocktails = MutableLiveData<List<Cocktail>>()
+    private val _randomCocktails = MutableLiveData<List<CocktailItem>>()
     val randomCocktails = _randomCocktails
 
     private val _error = MutableLiveData<String>()
@@ -44,7 +44,7 @@ class HomeCocktailsViewModel(
                 is Result.Success -> {
                     _remotePopularDrinks.clear()
                     _remotePopularDrinks.addAll(drinkResult.data)
-                    popularCocktails.value = mapper.fromDrinkToCocktail(_remotePopularDrinks)
+                    popularCocktails.value = itemMapper.fromDrinkItemsToCocktailItems(_remotePopularDrinks)
                     getLatestCocktails()
                 }
 
@@ -63,7 +63,7 @@ class HomeCocktailsViewModel(
                 is Result.Success -> {
                     _remoteLatestDrinks.clear()
                     _remoteLatestDrinks.addAll(drinkResult.data)
-                    latestCocktails.value = mapper.fromDrinkToCocktail(_remoteLatestDrinks)
+                    latestCocktails.value = itemMapper.fromDrinkItemsToCocktailItems(_remoteLatestDrinks)
                     getRandomCocktails()
                 }
 
@@ -82,7 +82,7 @@ class HomeCocktailsViewModel(
                 is Result.Success -> {
                     _remoteRandomDrinks.clear()
                     _remoteRandomDrinks.addAll(drinkResult.data)
-                    randomCocktails.value = mapper.fromDrinkToCocktail(_remoteRandomDrinks)
+                    randomCocktails.value = itemMapper.fromDrinkItemsToCocktailItems(_remoteRandomDrinks)
                     _dataLoading.postValue(false)
                 }
 

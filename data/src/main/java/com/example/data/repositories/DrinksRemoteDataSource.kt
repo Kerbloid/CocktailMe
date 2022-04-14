@@ -7,4 +7,5 @@ interface DrinksRemoteDataSource {
     suspend fun getRandomDrinks(): Result<List<Drink>>
     suspend fun getPopular(): Result<List<Drink>>
     suspend fun getLatest(): Result<List<Drink>>
+    suspend fun getCocktailById(id: String): Result<List<Drink>>
 }
