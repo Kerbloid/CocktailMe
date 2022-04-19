@@ -1,4 +1,4 @@
-package com.example.cocktailme.presentation.entities
+package com.example.cocktailme.entities
 
 data class Cocktail (
     val id: String? = null,
@@ -20,5 +20,6 @@ data class Cocktail (
     val measure4: Any? = null,
     val measure5: Any? = null,
     val tags: String? = null,
-    val video: String? = null
+    val video: String? = null,
+    val IBA: String? = null
 )

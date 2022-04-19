@@ -1,22 +1,9 @@
 package com.example.data.mappers
 
-import android.util.Log
 import com.example.data.api.DrinkApiResponse
 import com.example.domain.entities.Drink
 
 class DrinkApiResponseMapper {
-    fun toDrinkItemsList(response: DrinkApiResponse): List<Drink> {
-        return response.drinks.map { item ->
-            with(item) {
-                Drink(
-                    id = id,
-                    name = name,
-                    drinkThumb = drinkThumb,
-                    alcoholic = alcoholic
-                )
-            }
-        }
-    }
 
     fun toDrinkList(response: DrinkApiResponse): List<Drink> {
         return response.drinks.map { item ->
@@ -26,6 +13,7 @@ class DrinkApiResponseMapper {
                     alcoholic = alcoholic,
                     category = category,
                     name = name,
+                    IBA = IBA,
                     drinkAlternate = drinkAlternate,
                     drinkThumb = drinkThumb,
                     glass = glass,
@@ -42,7 +30,7 @@ class DrinkApiResponseMapper {
                     measure5 = measure5,
                     tags = tags,
                     video = video
-                ).also { Log.d("SASA", "$it") }
+                )
             }
         }
     }

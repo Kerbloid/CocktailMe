@@ -10,4 +10,8 @@
     <string name="text_information">Information</string>
     <string name="text_instructions">Instructions</string>
     <string name="unknown">Unknown</string>
+    <string name="iba">IBA</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="info_string_format">%1$s: %2$s</string>
+    <string name="ingredients_string_format">%1$s %2$s</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.cocktailme.presentation.ui.common
+package com.example.cocktailme.common
 
 import android.view.View
 import android.view.View.GONE

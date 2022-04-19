@@ -11,14 +11,14 @@ class DrinkRemoteDataSourceImpl(
 ) : DrinksRemoteDataSource {
 
     override suspend fun getRandomDrinks(): Result<List<Drink>> =
-        drinkApiExecutor.executeItems(service.getRandomDrinks())
+        drinkApiExecutor.execute(service.getRandomDrinks())
 
     override suspend fun getPopular(): Result<List<Drink>> =
-        drinkApiExecutor.executeItems(service.getPopular())
+        drinkApiExecutor.execute(service.getPopular())
 
     override suspend fun getLatest(): Result<List<Drink>> =
-        drinkApiExecutor.executeItems(service.getLatest())
+        drinkApiExecutor.execute(service.getLatest())
 
     override suspend fun getCocktailById(id: String): Result<List<Drink>> =
-        drinkApiExecutor.executeDrinks(service.getCocktailById(id))
+        drinkApiExecutor.execute(service.getCocktailById(id))
 }

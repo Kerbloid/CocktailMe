@@ -1,4 +1,4 @@
-package com.example.cocktailme.presentation.di
+package com.example.cocktailme.di
 
 import com.example.domain.usecases.GetCocktailByIdUseCase
 import com.example.domain.usecases.GetLatestCocktailsUseCase

@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cocktailme.R
 import com.example.cocktailme.databinding.FragmentCocktailsHomeBinding
-import com.example.cocktailme.presentation.ui.common.LayoutUtils
-import com.example.cocktailme.presentation.ui.common.MarginItemDecoration
+import com.example.cocktailme.common.LayoutUtils
+import com.example.cocktailme.common.MarginItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeCocktailsFragment : Fragment(), CocktailClickListener {
@@ -111,10 +111,13 @@ class HomeCocktailsFragment : Fragment(), CocktailClickListener {
             }
         }
 
-        viewModel.error.observe(viewLifecycleOwner) {
+        viewModel.error.observe(viewLifecycleOwner) { error ->
             Toast.makeText(
                 requireContext(),
-                it,
+                when (error) {
+                    is String -> error
+                    else -> getString(error as Int)
+                },
                 Toast.LENGTH_SHORT
             ).show()
         }

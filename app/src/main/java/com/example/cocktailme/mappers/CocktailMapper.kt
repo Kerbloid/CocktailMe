@@ -1,7 +1,7 @@
-package com.example.cocktailme.presentation.mappers
+package com.example.cocktailme.mappers
 
-import com.example.cocktailme.presentation.entities.Cocktail
-import com.example.cocktailme.presentation.entities.CocktailItem
+import android.util.Log
+import com.example.cocktailme.entities.Cocktail
 import com.example.domain.entities.Drink
 
 class CocktailMapper {
@@ -29,7 +29,8 @@ class CocktailMapper {
                 measure4 = measure4,
                 measure5 = measure5,
                 tags = tags,
-                video = video
+                video = video,
+                IBA = IBA
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.example.cocktailme.presentation.di
+package com.example.cocktailme.di
 
 import com.example.data.api.DrinkApiExecutor
 import com.example.data.mappers.DrinkApiResponseMapper

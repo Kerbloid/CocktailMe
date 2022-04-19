@@ -31,12 +31,22 @@
 
     <TextView
         android:id="@+id/alcoholic"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@id/drinkName"
         app:layout_constraintStart_toStartOf="@id/drinkImage"
-        app:layout_constraintEnd_toEndOf="@id/drinkImage"
         tools:text="random drink"/>
+
+    <TextView
+        android:id="@+id/iba"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:text="@string/iba"
+        app:layout_constraintTop_toBottomOf="@id/drinkName"
+        app:layout_constraintEnd_toEndOf="@id/drinkImage"
+        tools:text="@string/iba"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
-package com.example.cocktailme.presentation
+package com.example.cocktailme
 
 import android.app.Application
-import com.example.cocktailme.presentation.di.*
+import com.example.cocktailme.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

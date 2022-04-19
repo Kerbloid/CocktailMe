@@ -1,5 +1,6 @@
-package com.example.cocktailme.presentation.di
+package com.example.cocktailme.di
 
+import com.example.cocktailme.common.NetworkIdentifier
 import com.example.data.API_KEY
 import com.example.data.BASE_URL
 import com.example.data.api.DrinkApi
@@ -36,4 +37,6 @@ val networkModule = module {
     }
 
     factory { get<Retrofit>().create(DrinkApi::class.java) }
+
+    factory<NetworkIdentifier> { NetworkIdentifier(context = get()) }
 }

@@ -12,7 +12,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cocktailme.R
-import com.example.cocktailme.presentation.entities.CocktailItem
+import com.example.cocktailme.entities.CocktailItem
+import com.example.cocktailme.common.visible
 
 class CocktailsAdapter(private val listener: CocktailClickListener) :
     ListAdapter<CocktailItem, CocktailsAdapter.CocktailViewHolder>(CocktailsDiffCallback()) {
@@ -33,6 +34,7 @@ class CocktailsAdapter(private val listener: CocktailClickListener) :
         val name: TextView = itemView.findViewById(R.id.drinkName)
         val image: ImageView = itemView.findViewById(R.id.drinkImage)
         val alcoholic: TextView = itemView.findViewById(R.id.alcoholic)
+        val iba: TextView = itemView.findViewById(R.id.iba)
         fun bind(cocktail: CocktailItem) {
             val context = itemView.context
             Glide.with(context)
@@ -41,6 +43,7 @@ class CocktailsAdapter(private val listener: CocktailClickListener) :
                 .into(image)
             alcoholic.text = cocktail.alcoholic ?: context.getString(R.string.unknown)
             name.text = cocktail.name ?: context.getString(R.string.unknown)
+            iba.visible(!cocktail.IBA.isNullOrEmpty())
             itemView.setOnClickListener {
                 listener.onCocktailSelected(cocktail.id ?: return@setOnClickListener)
             }

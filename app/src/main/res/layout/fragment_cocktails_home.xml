@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="16dp"
                 android:visibility="gone"
                 android:text="@string/text_popular"/>
@@ -34,8 +35,8 @@
                 android:layout_height="wrap_content"
                 tools:itemCount="10"
                 android:visibility="gone"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
                 tools:listitem="@layout/item_cocktail" />
 
             <TextView
@@ -55,8 +56,8 @@
                 tools:itemCount="10"
                 android:visibility="gone"
                 android:layout_weight="1"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
                 tools:listitem="@layout/item_cocktail" />
 
             <TextView
@@ -74,8 +75,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:itemCount="10"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
                 android:visibility="gone"
                 tools:listitem="@layout/item_cocktail" />
         </LinearLayout>

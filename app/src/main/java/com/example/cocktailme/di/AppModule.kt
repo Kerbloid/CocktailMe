@@ -1,7 +1,7 @@
-package com.example.cocktailme.presentation.di
+package com.example.cocktailme.di
 
-import com.example.cocktailme.presentation.mappers.CocktailItemMapper
-import com.example.cocktailme.presentation.mappers.CocktailMapper
+import com.example.cocktailme.mappers.CocktailItemMapper
+import com.example.cocktailme.mappers.CocktailMapper
 import com.example.cocktailme.presentation.ui.cocktailInfo.CocktailInfoViewModel
 import com.example.cocktailme.presentation.ui.home.HomeCocktailsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -17,14 +17,16 @@ val appModule = module {
             getPopularCocktailsUseCase = get(),
             getLatestCocktailsUseCase = get(),
             getRandomCocktailsUseCase = get(),
-            itemMapper = get()
+            itemMapper = get(),
+            networkIdentifier = get()
         )
     }
 
     viewModel<CocktailInfoViewModel> {
         CocktailInfoViewModel(
             getCocktailByIdUseCase = get(),
-            cocktailMapper = get()
+            cocktailMapper = get(),
+            networkIdentifier = get()
         )
     }
 }

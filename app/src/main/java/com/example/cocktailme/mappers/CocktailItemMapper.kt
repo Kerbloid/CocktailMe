@@ -1,6 +1,6 @@
-package com.example.cocktailme.presentation.mappers
+package com.example.cocktailme.mappers
 
-import com.example.cocktailme.presentation.entities.CocktailItem
+import com.example.cocktailme.entities.CocktailItem
 import com.example.domain.entities.Drink
 
 class CocktailItemMapper {
@@ -15,7 +15,8 @@ class CocktailItemMapper {
                         id = id,
                         name = name,
                         alcoholic = alcoholic,
-                        image = drinkThumb
+                        image = drinkThumb,
+                        IBA = IBA
                     )
                 )
             }
