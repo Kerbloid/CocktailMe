@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cocktailme.R
-import com.example.cocktailme.databinding.FragmentRandomCocktailsBinding
-import com.example.cocktailme.presentation.ui.cocktailInfo.CocktailInfoFragment
+import com.example.cocktailme.databinding.FragmentCocktailsHomeBinding
 import com.example.cocktailme.presentation.ui.common.LayoutUtils
 import com.example.cocktailme.presentation.ui.common.MarginItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeCocktailsFragment : Fragment(), CocktailClickListener {
 
-    private var _binding: FragmentRandomCocktailsBinding? = null
+    private var _binding: FragmentCocktailsHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var popularCocktailsAdapter: CocktailsAdapter
     private lateinit var latestCocktailsAdapter: CocktailsAdapter
@@ -28,9 +29,9 @@ class HomeCocktailsFragment : Fragment(), CocktailClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        popularCocktailsAdapter = CocktailsAdapter(requireContext(), this)
-        latestCocktailsAdapter = CocktailsAdapter(requireContext(), this)
-        randomCocktailsAdapter = CocktailsAdapter(requireContext(), this)
+        popularCocktailsAdapter = CocktailsAdapter(this)
+        latestCocktailsAdapter = CocktailsAdapter(this)
+        randomCocktailsAdapter = CocktailsAdapter(this)
         viewModel.getPopularCocktails()
     }
 
@@ -39,7 +40,7 @@ class HomeCocktailsFragment : Fragment(), CocktailClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRandomCocktailsBinding.inflate(inflater, container, false)
+        _binding = FragmentCocktailsHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val recyclerViewRandom: RecyclerView = binding.rvRandom
         val recyclerViewPopular: RecyclerView = binding.rvPopular
@@ -69,13 +70,13 @@ class HomeCocktailsFragment : Fragment(), CocktailClickListener {
         }
 
         viewModel.popularCocktails.observe(viewLifecycleOwner) {
-            popularCocktailsAdapter.submitUpdate(it)
+            popularCocktailsAdapter.submitList(it)
         }
         viewModel.latestCocktails.observe(viewLifecycleOwner) {
-            latestCocktailsAdapter.submitUpdate(it)
+            latestCocktailsAdapter.submitList(it)
         }
         viewModel.randomCocktails.observe(viewLifecycleOwner) {
-            randomCocktailsAdapter.submitUpdate(it)
+            randomCocktailsAdapter.submitList(it)
         }
 
         viewModel.dataLoading.observe(viewLifecycleOwner) { loading ->
@@ -127,9 +128,7 @@ class HomeCocktailsFragment : Fragment(), CocktailClickListener {
     }
 
     override fun onCocktailSelected(id: String) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment_activity_main, CocktailInfoFragment(id))
-            .addToBackStack(null)
-            .commit()
+        val bundle = bundleOf("id" to id)
+        findNavController().navigate(R.id.action_cocktails_to_navigation_cocktail_info, bundle)
     }
 }

@@ -6,4 +6,8 @@
     <string name="text_random">Random</string>
     <string name="text_popular">Popular</string>
     <string name="text_latest">Latest</string>
+    <string name="text_tags">Tags</string>
+    <string name="text_information">Information</string>
+    <string name="text_instructions">Instructions</string>
+    <string name="unknown">Unknown</string>
 </resources>

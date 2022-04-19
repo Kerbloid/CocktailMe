@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CollapsedToolbarText" parent="@android:style/TextAppearance.Medium">
-        <item name="android:ellipsize">marquee</item>
-    </style>
 
     <style name="ExpandedToolbarText" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
         <item name="android:shadowColor">#000000</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">0</item>
         <item name="android:shadowRadius">10</item>
+    </style>
+
+    <style name="ChipAction" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipBackgroundColor">?android:attr/windowBackground</item>
+        <item name="chipStrokeColor">?attr/colorPrimary</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:checkable">false</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
     </style>
 </resources>

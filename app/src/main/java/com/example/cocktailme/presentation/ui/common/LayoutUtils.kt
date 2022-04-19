@@ -6,7 +6,7 @@ class LayoutUtils {
     companion object {
         fun crossFade(viewsToShow: List<View>, viewsToHide: List<View>, duration: Int = 500) {
             viewsToHide.forEach {
-                it.visibility = View.GONE
+                it.gone()
             }
             viewsToShow.forEach {
                 it.fadeIn()
@@ -18,7 +18,7 @@ class LayoutUtils {
 fun View.fadeIn(duration: Int = 500) {
     this.apply {
         alpha = 0f
-        visibility = View.VISIBLE
+        visible()
 
         animate()
             .alpha(1f)

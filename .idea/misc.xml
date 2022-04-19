@@ -4,19 +4,29 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1215" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.119" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_baseline_no_drinks_24.xml" value="0.12" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_cocktail_svgrepo_com.xml" value="0.126" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1215" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1215" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_outline_favorite_border_24.xml" value="0.1" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_outline_keyboard_backspace_24.xml" value="0.1215" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_outline_local_bar_24.xml" value="0.1215" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/ic_outline_no_drinks_24.xml" value="0.12" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/item_background.xml" value="0.136" />
-        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/activity_main.xml" value="0.19230769230769232" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/item_placeholder.xml" value="0.126" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/drawable/tag_tag_background.xml" value="0.1" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/content_scrolling.xml" value="0.21927083333333333" />
-        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/fragment_cocktail_info.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/fragment_cocktail_info.xml" value="0.2" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/fragment_cocktails_home.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/fragment_dashboard.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/fragment_home.xml" value="0.24375" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/fragment_random_cocktails.xml" value="0.1136890951276102" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/item_chip.xml" value="0.4" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/item_cocktail.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/item_drink.xml" value="0.24375" />
+        <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/item_tag.xml" value="0.4" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/menu/bottom_nav_menu.xml" value="0.21927083333333333" />
       </map>
     </option>

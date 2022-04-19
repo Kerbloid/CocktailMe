@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.cocktailme.R
 import com.example.cocktailme.databinding.FragmentCocktailInfoBinding
+import com.example.cocktailme.presentation.ui.common.visible
+import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.content_scrolling.view.*
-import kotlinx.android.synthetic.main.fragment_cocktail_info.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CocktailInfoFragment(private val id: String): Fragment() {
+class CocktailInfoFragment: Fragment() {
 
     private var _binding: FragmentCocktailInfoBinding? = null
     private val binding get() = _binding!!
@@ -24,7 +24,8 @@ class CocktailInfoFragment(private val id: String): Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getCocktail(id)
+        val id = arguments?.getString("id")
+        id?.let { viewModel.getCocktail(it) }
     }
 
     override fun onCreateView(
@@ -33,28 +34,53 @@ class CocktailInfoFragment(private val id: String): Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCocktailInfoBinding.inflate(inflater, container, false)
+        val context = requireContext()
         val root: View = binding.root
-        val text = binding.root.text
         val toolbar = binding.toolbarLayout
         val image = binding.drinkImage
-        viewModel.cocktail.observe(viewLifecycleOwner) {
-            Glide.with(requireContext())
-                .load(it.drinkThumb ?: R.mipmap.ic_launcher_round)
+        val backButton = binding.back
+        val tagsGroup = root.tagsGroup
+
+        backButton.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_cocktail_info_to_cocktails)
+        }
+
+        viewModel.cocktail.observe(viewLifecycleOwner) { cocktail ->
+            toolbar.title = cocktail.name ?: getString(R.string.unknown)
+            Glide.with(context)
+                .load(cocktail.drinkThumb ?: R.drawable.item_placeholder)
                 .centerCrop()
                 .into(image)
-            toolbar.isSelected = true
-            toolbar.title = it.name
-            text.text = it.toString()
+            cocktail.tags?.let {
+                tagsGroup.visible()
+                setTags(it.split(','))
+            }
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
             Toast.makeText(
-                requireContext(),
+                context,
                 it,
                 Toast.LENGTH_SHORT
             ).show()
         }
 
         return root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    private fun setTags(tags: List<String>?) {
+        val tagsGroup = binding.root.tagsGroup
+        tagsGroup.removeAllViews()
+        tags?.forEach {
+            val inflater = LayoutInflater.from(requireContext())
+            val tag: Chip = inflater.inflate(R.layout.item_tag, tagsGroup, false) as Chip
+            tag.text = it
+            tagsGroup.addView(tag)
+        }
     }
 }
