@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.example.cocktailme.R
 import com.example.cocktailme.databinding.FragmentCocktailsHomeBinding
 import com.example.cocktailme.common.LayoutUtils
 import com.example.cocktailme.common.MarginItemDecoration
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeCocktailsFragment : Fragment(), CocktailClickListener {
@@ -32,7 +34,9 @@ class HomeCocktailsFragment : Fragment(), CocktailClickListener {
         popularCocktailsAdapter = CocktailsAdapter(this)
         latestCocktailsAdapter = CocktailsAdapter(this)
         randomCocktailsAdapter = CocktailsAdapter(this)
-        viewModel.getPopularCocktails()
+        lifecycleScope.launch {
+            viewModel.getCocktails()
+        }
     }
 
     override fun onCreateView(

@@ -13,7 +13,7 @@ import com.example.domain.entities.Drink
 import com.example.domain.usecases.GetLatestCocktailsUseCase
 import com.example.domain.usecases.GetPopularCocktailsUseCase
 import com.example.domain.usecases.GetRandomCocktailsUseCase
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class HomeCocktailsViewModel(
     private val getPopularCocktailsUseCase: GetPopularCocktailsUseCase,
@@ -40,68 +40,109 @@ class HomeCocktailsViewModel(
     private val _remoteLatestDrinks = arrayListOf<Drink>()
     private val _remoteRandomDrinks = arrayListOf<Drink>()
 
-    //TODO refactor rest in one fun
-    fun getPopularCocktails() {
+    fun getCocktails() {
         viewModelScope.launch {
             if (networkIdentifier.isNetworkConnected()) {
-                when (val drinkResult = getPopularCocktailsUseCase.getPopularCocktails()) {
-                    is Result.Success -> {
-                        _remotePopularDrinks.clear()
-                        _remotePopularDrinks.addAll(drinkResult.data)
-                        _popularCocktails.value =
-                            itemMapper.fromDrinkItemsToCocktailItems(_remotePopularDrinks)
-                        getLatestCocktails()
-                    }
-
-                    is Result.Error -> {
-                        _dataLoading.postValue(false)
-                        _popularCocktails.value = emptyList()
-                        _error.postValue(drinkResult.exception.message)
-                    }
-                }
+                getCocktailsAsync()
+                _dataLoading.postValue(false)
             } else {
                 _error.postValue(R.string.no_internet_connection)
             }
         }
     }
 
-    fun getLatestCocktails() {
-        viewModelScope.launch {
-            when (val drinkResult = getLatestCocktailsUseCase.getLatestCocktails()) {
-                is Result.Success -> {
-                    _remoteLatestDrinks.clear()
-                    _remoteLatestDrinks.addAll(drinkResult.data)
-                    _latestCocktails.value = itemMapper.fromDrinkItemsToCocktailItems(_remoteLatestDrinks)
-                    getRandomCocktails()
-                }
-
-                is Result.Error -> {
-                    _dataLoading.postValue(false)
-                    _latestCocktails.value = emptyList()
-                    _error.postValue(drinkResult.exception.message)
-                }
+    private suspend fun getCocktailsAsync() {
+        coroutineScope {
+            launch {
+                getResult(
+                    getPopularCocktailsUseCase.getPopularCocktails(),
+                    _remotePopularDrinks,
+                    _popularCocktails
+                )
+            }
+            launch {
+                getResult(
+                    getLatestCocktailsUseCase.getLatestCocktails(),
+                    _remoteLatestDrinks,
+                    _latestCocktails
+                )
+            }
+            launch {
+                getResult(
+                    getRandomCocktailsUseCase.getRandomCocktails(),
+                    _remoteRandomDrinks,
+                    _randomCocktails
+                )
             }
         }
     }
 
-    fun getRandomCocktails() {
-        viewModelScope.launch {
-            when (val drinkResult = getRandomCocktailsUseCase.getRandomCocktails()) {
-                is Result.Success -> {
-                    _remoteRandomDrinks.clear()
-                    _remoteRandomDrinks.addAll(drinkResult.data)
-                    _randomCocktails.value = itemMapper.fromDrinkItemsToCocktailItems(_remoteRandomDrinks)
-                    _dataLoading.postValue(false)
-                }
-
-                is Result.Error -> {
-                    _dataLoading.postValue(false)
-                    _randomCocktails.value = emptyList()
-                    _error.postValue(drinkResult.exception.message)
-                }
+    private fun getResult(
+        result: Result<List<Drink>>,
+        remoteList: ArrayList<Drink>,
+        mutableLiveDataList: MutableLiveData<List<CocktailItem>>
+    ) {
+        when (result) {
+            is Result.Success -> {
+                remoteList.clear()
+                remoteList.addAll(result.data)
+                mutableLiveDataList.value = itemMapper.fromDrinkItemsToCocktailItems(remoteList)
+            }
+            is Result.Error -> {
+                mutableLiveDataList.value = emptyList()
+                _error.postValue(result.exception.message)
             }
         }
     }
+//
+//    private suspend fun getPopularCocktails() {
+//        when (val drinkResult = getPopularCocktailsUseCase.getPopularCocktails()) {
+//            is Result.Success -> {
+//                _remotePopularDrinks.clear()
+//                _remotePopularDrinks.addAll(drinkResult.data)
+//                _popularCocktails.value =
+//                    itemMapper.fromDrinkItemsToCocktailItems(_remotePopularDrinks)
+//            }
+//
+//            is Result.Error -> {
+//                _popularCocktails.value = emptyList()
+//            }
+//        }
+//    }
+//
+//    private fun getLatestCocktails() {
+//        viewModelScope.launch {
+//            when (val drinkResult = getLatestCocktailsUseCase.getLatestCocktails()) {
+//                is Result.Success -> {
+//                    _remoteLatestDrinks.clear()
+//                    _remoteLatestDrinks.addAll(drinkResult.data)
+//                    _latestCocktails.value =
+//                        itemMapper.fromDrinkItemsToCocktailItems(_remoteLatestDrinks)
+//                }
+//
+//                is Result.Error -> {
+//                    _latestCocktails.value = emptyList()
+//                }
+//            }
+//        }
+//    }
+//
+//    private fun getRandomCocktails() {
+//        viewModelScope.launch {
+//            when (val drinkResult = getRandomCocktailsUseCase.getRandomCocktails()) {
+//                is Result.Success -> {
+//                    _remoteRandomDrinks.clear()
+//                    _remoteRandomDrinks.addAll(drinkResult.data)
+//                    _randomCocktails.value =
+//                        itemMapper.fromDrinkItemsToCocktailItems(_remoteRandomDrinks)
+//                }
+//
+//                is Result.Error -> {
+//                    _randomCocktails.value = emptyList()
+//                }
+//            }
+//        }
+//    }
 
 //    fun bookmark(book: BookWithStatus) {
 //        viewModelScope.launch {

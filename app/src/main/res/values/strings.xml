@@ -9,9 +9,15 @@
     <string name="text_tags">Tags</string>
     <string name="text_information">Information</string>
     <string name="text_instructions">Instructions</string>
+    <string name="text_ingredients">Ingredients</string>
+    <string name="text_details">Details</string>
+    <string name="text_how_to_make">How to make</string>
     <string name="unknown">Unknown</string>
     <string name="iba">IBA</string>
     <string name="no_internet_connection">No internet connection</string>
     <string name="info_string_format">%1$s: %2$s</string>
     <string name="ingredients_string_format">%1$s %2$s</string>
+    <string name="alcoholic">Alcoholic</string>
+    <string name="category">Category</string>
+    <string name="glass">Glass</string>
 </resources>

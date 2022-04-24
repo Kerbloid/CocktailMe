@@ -8,6 +8,13 @@
         <item name="android:shadowRadius">10</item>
     </style>
 
+    <style name="CollapsedToolbarText">
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">10</item>
+    </style>
+
     <style name="ChipAction" parent="Widget.MaterialComponents.Chip.Action">
         <item name="chipBackgroundColor">?android:attr/windowBackground</item>
         <item name="chipStrokeColor">?attr/colorPrimary</item>

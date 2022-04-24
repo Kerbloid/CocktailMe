@@ -17,7 +17,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/cocktail_info_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="2dp"
@@ -30,10 +29,24 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:background="@drawable/item_background"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_details"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="18sp"/>
+
+                <LinearLayout
+                    android:id="@+id/cocktail_info_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"/>
+
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/cocktail_ingredients_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="2dp"
@@ -45,10 +58,24 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:background="@drawable/item_background"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_ingredients"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:id="@+id/cocktail_ingredients_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"/>
+
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/cocktail_instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="2dp"
@@ -60,13 +87,39 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:background="@drawable/item_background"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_how_to_make"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:id="@+id/cocktail_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"/>
+
+        </LinearLayout>
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtube_player_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            app:autoPlay="false" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/tagsGroup"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
