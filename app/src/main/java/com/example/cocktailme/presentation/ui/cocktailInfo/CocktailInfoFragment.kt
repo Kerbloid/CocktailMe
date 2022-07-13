@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -14,15 +13,17 @@ import com.bumptech.glide.Glide
 import com.example.cocktailme.R
 import com.example.cocktailme.common.LayoutUtils
 import com.example.cocktailme.common.gone
+import com.example.cocktailme.common.showToast
 import com.example.cocktailme.common.visible
 import com.example.cocktailme.databinding.FragmentCocktailInfoBinding
+import com.example.cocktailme.entities.Cocktail
 import com.example.data.YOUTUBE_URL_REGEX
 import com.google.android.material.chip.Chip
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import kotlinx.android.synthetic.main.content_scrolling.*
 import kotlinx.android.synthetic.main.content_scrolling.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class CocktailInfoFragment : Fragment() {
 
@@ -43,15 +44,8 @@ class CocktailInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCocktailInfoBinding.inflate(inflater, container, false)
-        val context = requireContext()
         val root: View = binding.root
-        val toolbar = binding.toolbarLayout
-        val image = binding.drinkImage
         val backButton = binding.back
-        val appBar = binding.appBar
-        val tagsGroup = root.tagsGroup
-        val progress = binding.pbLoadingDrink
-        val cocktailInfoLayout = root.cocktail_info
         val player = binding.root.youtube_player_view
 
         lifecycle.addObserver(player)
@@ -60,84 +54,42 @@ class CocktailInfoFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_cocktail_info_to_cocktails)
         }
 
+        initViewModel()
+
+        return root
+    }
+
+    private fun initViewModel() {
         viewModel.cocktail.observe(viewLifecycleOwner) { cocktail ->
             if (cocktail == null) return@observe
-            Log.d("SASA", "cocktail: $cocktail")
-            toolbar.title = cocktail.name ?: getString(R.string.unknown)
-            Glide.with(context)
-                .load(cocktail.drinkThumb ?: R.drawable.item_placeholder)
-                .centerCrop()
-                .into(image)
-            cocktail.tags?.let {
-                tagsGroup.visible()
-                setTags(it.split(','))
-            }
-            setInfo(
-                listOf(
-                    getString(R.string.iba) to cocktail.IBA,
-                    getString(R.string.alcoholic) to cocktail.alcoholic?.lowercase(),
-                    getString(R.string.category) to cocktail.category?.lowercase(),
-                    getString(R.string.glass) to cocktail.glass
-                )
-            )
-            setIngredients(
-                listOf(
-                    cocktail.measure1 to cocktail.ingredient1,
-                    cocktail.measure2 to cocktail.ingredient2,
-                    cocktail.measure3 to cocktail.ingredient3,
-                    cocktail.measure4 as String? to  cocktail.ingredient4 as String?,
-                    cocktail.measure5 as String? to cocktail.ingredient5 as String?,
-                    cocktail.measure6 as String? to cocktail.ingredient6 as String?,
-                    cocktail.measure7 as String? to cocktail.ingredient7 as String?,
-                    cocktail.measure8 as String? to cocktail.ingredient8 as String?,
-                    cocktail.measure9 as String? to cocktail.ingredient9 as String?,
-                    cocktail.measure10 as String? to cocktail.ingredient10 as String?
-                )
-            )
-            setInstructions(cocktail.instructions)
-
-            cocktail.video?.let { url ->
-                player.visible()
-                player.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                    override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
-                        val videoId = getYoutubeVideoId(url)
-                        videoId?.let {
-                            youTubePlayer.cueVideo(it, 0f)
-                        }
-                    }
-                })
-            }
+            setCocktail(cocktail)
         }
 
         viewModel.dataLoading.observe(viewLifecycleOwner) { loading ->
             when (loading) {
                 true -> {
                     LayoutUtils.crossFade(
-                        listOf(progress),
-                        listOf(cocktailInfoLayout, appBar, tagsGroup)
+                        listOf(binding.pbLoadingDrink),
+                        listOf(binding.root.cocktail_info, binding.appBar, tagsGroup)
                     )
                 }
                 false -> {
                     LayoutUtils.crossFade(
-                        listOf(cocktailInfoLayout, appBar, tagsGroup),
-                        listOf(progress)
+                        listOf(binding.root.cocktail_info, binding.appBar, tagsGroup),
+                        listOf(binding.pbLoadingDrink)
                     )
                 }
             }
         }
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
-            Toast.makeText(
-                context,
+            requireActivity().showToast(
                 when (error) {
                     is String -> error
                     else -> getString(error as Int)
-                },
-                Toast.LENGTH_SHORT
-            ).show()
+                }
+            )
         }
-
-        return root
     }
 
     override fun onDestroy() {
@@ -145,14 +97,41 @@ class CocktailInfoFragment : Fragment() {
         _binding = null
     }
 
-    private fun setTags(tags: List<String>) {
-        val tagsGroupView = binding.root.tagsGroup
-        tagsGroupView.removeAllViews()
-        val inflater = LayoutInflater.from(requireContext())
-        tags.forEach {
-            val tag: Chip = inflater.inflate(R.layout.item_tag, tagsGroupView, false) as Chip
-            tag.text = it
-            tagsGroupView.addView(tag)
+    private fun setCocktail(cocktail: Cocktail) {
+        Log.d("Cocktail", "cocktail: $cocktail")
+        binding.toolbarLayout.title = cocktail.name ?: getString(R.string.unknown)
+
+        setCocktailImage(cocktail.drinkThumb)
+
+        setInfo(viewModel.getInfo())
+
+        setIngredients(viewModel.getIngredients())
+
+        setInstructions(cocktail.instructions)
+
+        setCocktailVideo(cocktail.video)
+
+        setTags(cocktail.tags?.split(','))
+    }
+
+    private fun setCocktailImage(uri: String?) {
+        Glide.with(requireContext())
+            .load(uri ?: R.drawable.item_placeholder)
+            .centerCrop()
+            .into(binding.drinkImage)
+    }
+
+    private fun setTags(tags: List<String>?) {
+        tags?.let {
+            val tagsGroupView = binding.root.tagsGroup
+            tagsGroupView.visible()
+            tagsGroupView.removeAllViews()
+            val inflater = LayoutInflater.from(requireContext())
+            tags.forEach {
+                val tag: Chip = inflater.inflate(R.layout.item_tag, tagsGroupView, false) as Chip
+                tag.text = it
+                tagsGroupView.addView(tag)
+            }
         }
     }
 
@@ -178,12 +157,14 @@ class CocktailInfoFragment : Fragment() {
             val informationTextView: TextView =
                 inflater.inflate(R.layout.item_ingredient_text, ingredientsView, false) as TextView
             val measure = if (it.first == null) "" else it.first
-            informationTextView.text = getString(R.string.ingredients_string_format, measure, it.second).trim()
+            informationTextView.text =
+                getString(R.string.ingredients_string_format, measure, it.second).trim()
             ingredientsView.addView(informationTextView)
         }
     }
 
     private fun setInstructions(instructions: String?) {
+        Log.d("SASA", "instr: $instructions")
         val instructionsView = binding.root.cocktail_instructions
         if (instructions.isNullOrEmpty()) {
             instructionsView.gone()
@@ -191,7 +172,8 @@ class CocktailInfoFragment : Fragment() {
         }
         instructionsView.removeAllViews()
         val inflater = LayoutInflater.from(requireContext())
-        val instructionsTextView: TextView = inflater.inflate(R.layout.item_instructions_text, instructionsView, false) as TextView
+        val instructionsTextView: TextView =
+            inflater.inflate(R.layout.item_instructions_text, instructionsView, false) as TextView
         instructionsTextView.text = instructions.trim()
         instructionsView.addView(instructionsTextView)
     }
@@ -199,5 +181,21 @@ class CocktailInfoFragment : Fragment() {
     private fun getYoutubeVideoId(link: String): String? {
         val regex = YOUTUBE_URL_REGEX.toRegex()
         return regex.find(link)?.value
+    }
+
+    private fun setCocktailVideo(videoUrl: String?) {
+        Log.d("SASA", "url: $videoUrl")
+        videoUrl?.let { url ->
+            val videoView = binding.root.youtube_player_view
+            videoView.visible()
+            videoView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
+                    val videoId = getYoutubeVideoId(url)
+                    videoId?.let {
+                        youTubePlayer.cueVideo(it, 0f)
+                    }
+                }
+            })
+        }
     }
 }

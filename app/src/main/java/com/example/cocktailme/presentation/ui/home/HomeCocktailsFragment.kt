@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -13,9 +12,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cocktailme.R
-import com.example.cocktailme.databinding.FragmentCocktailsHomeBinding
 import com.example.cocktailme.common.LayoutUtils
 import com.example.cocktailme.common.MarginItemDecoration
+import com.example.cocktailme.common.StartSnapHelper
+import com.example.cocktailme.common.showToast
+import com.example.cocktailme.databinding.FragmentCocktailsHomeBinding
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -54,24 +55,9 @@ class HomeCocktailsFragment : Fragment(), CocktailClickListener {
         val textLatest = binding.textLatest
         val textRandom = binding.textRandom
 
-        recyclerViewPopular.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = popularCocktailsAdapter
-            addItemDecoration(MarginItemDecoration(20,5,20,5))
-        }
-        recyclerViewLatest.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = latestCocktailsAdapter
-            addItemDecoration(MarginItemDecoration(20,5,20,5))
-        }
-        recyclerViewRandom.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = randomCocktailsAdapter
-            addItemDecoration(MarginItemDecoration(20,5,20,5))
-        }
+        initRecyclerView(recyclerViewPopular, popularCocktailsAdapter)
+        initRecyclerView(recyclerViewLatest, latestCocktailsAdapter)
+        initRecyclerView(recyclerViewRandom, randomCocktailsAdapter)
 
         viewModel.popularCocktails.observe(viewLifecycleOwner) {
             popularCocktailsAdapter.submitList(it)
@@ -116,17 +102,25 @@ class HomeCocktailsFragment : Fragment(), CocktailClickListener {
         }
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
-            Toast.makeText(
-                requireContext(),
+            requireActivity().showToast(
                 when (error) {
                     is String -> error
                     else -> getString(error as Int)
-                },
-                Toast.LENGTH_SHORT
-            ).show()
+                }
+            )
         }
 
         return root
+    }
+
+    private fun initRecyclerView(recyclerView: RecyclerView, cocktailAdapter: CocktailsAdapter) {
+        recyclerView.apply {
+            StartSnapHelper().attachToRecyclerView(this)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = cocktailAdapter
+            addItemDecoration(MarginItemDecoration(20, 5, 20, 5))
+        }
     }
 
     override fun onDestroyView() {
