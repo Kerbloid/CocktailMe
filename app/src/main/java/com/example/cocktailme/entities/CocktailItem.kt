@@ -5,5 +5,6 @@ data class CocktailItem(
     val name: String? = null,
     val alcoholic: String? = null,
     val image: String? = null,
-    val IBA: String? = null
+    val IBA: String? = null,
+    val ingredients: List<String?>
 )

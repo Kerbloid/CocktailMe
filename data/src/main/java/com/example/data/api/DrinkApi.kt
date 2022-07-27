@@ -19,7 +19,10 @@ interface DrinkApi {
 
     @GET("lookup.php")
     suspend fun getCocktailById(@Query("i") id: String): Response<DrinkApiResponse>
-//
+
+    @GET("search.php")
+    suspend fun searchCocktailByName(@Query("s") query: String): Response<DrinkApiResponse>
+
 //    @GET("search.php")
 //    fun searchByName(@Query("s") name: String)
 //

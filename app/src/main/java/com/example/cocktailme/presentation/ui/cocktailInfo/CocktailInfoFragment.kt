@@ -1,5 +1,6 @@
 package com.example.cocktailme.presentation.ui.cocktailInfo
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,24 +46,41 @@ class CocktailInfoFragment : Fragment() {
     ): View {
         _binding = FragmentCocktailInfoBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val backButton = binding.back
         val player = binding.root.youtube_player_view
 
         lifecycle.addObserver(player)
 
-        backButton.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_cocktail_info_to_cocktails)
-        }
-
+        initListeners()
         initViewModel()
 
         return root
     }
 
+    private fun initListeners() {
+        binding.back.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.fab.setOnClickListener {
+            viewModel.saveOrRemoveFromFavorite()
+        }
+    }
+
     private fun initViewModel() {
+
         viewModel.cocktail.observe(viewLifecycleOwner) { cocktail ->
             if (cocktail == null) return@observe
             setCocktail(cocktail)
+        }
+
+        viewModel.isInFavorite.observe(viewLifecycleOwner) { isInFavorite ->
+            if (isInFavorite) {
+                binding.fab.setImageResource(R.drawable.ic_baseline_favorite_24)
+                binding.fab.imageTintList = ColorStateList.valueOf(requireContext().getColor(R.color.purple_500))
+            } else {
+                binding.fab.setImageResource(R.drawable.ic_outline_not_favorite_border_24)
+                binding.fab.imageTintList = ColorStateList.valueOf(requireContext().getColor(android.R.color.black))
+            }
         }
 
         viewModel.dataLoading.observe(viewLifecycleOwner) { loading ->
@@ -156,9 +174,9 @@ class CocktailInfoFragment : Fragment() {
             if (it.second == null || it.second == "") return@forEach
             val informationTextView: TextView =
                 inflater.inflate(R.layout.item_ingredient_text, ingredientsView, false) as TextView
-            val measure = if (it.first == null) "" else it.first
+            val measure = if (it.first == null) "" else "- ${it.first}"
             informationTextView.text =
-                getString(R.string.ingredients_string_format, measure, it.second).trim()
+                getString(R.string.ingredients_string_format, it.second, measure).trim()
             ingredientsView.addView(informationTextView)
         }
     }

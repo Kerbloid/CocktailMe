@@ -33,6 +33,25 @@
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/item_instr_text.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/layout/item_tag.xml" value="0.4" />
         <entry key="..\:/Users/aliak/AndroidStudioProjects/app/src/main/res/menu/bottom_nav_menu.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.1745" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/drawable/ic_outline_clear_24.xml" value="0.1745" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/drawable/ic_outline_favorite_border_24.xml" value="0.1745" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/drawable/ic_outline_local_bar_24.xml" value="0.1745" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/drawable/ic_outline_no_drinks_24.xml" value="0.1745" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/drawable/item_background.xml" value="0.1745" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/drawable/item_placeholder.xml" value="0.1745" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/back_layer.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/content_scrolling.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/fragment_cocktail_info.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/fragment_cocktails_home.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/fragment_favorite.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/front_layer.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/item_cocktail.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/layout/item_cocktail_favorite.xml" value="0.25" />
+        <entry key="..\:/Users/aliak/StudioProjects/CocktailMe/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
       </map>
     </option>
   </component>

@@ -1,11 +1,11 @@
-package com.example.data.repositories
+package com.example.data.repositories.remote
 
 import com.example.domain.common.Result
 import com.example.domain.entities.Drink
-import com.example.domain.repositories.DrinkRepository
+import com.example.domain.repositories.RemoteRepository
 
-class DrinkRepositoryImpl (private val remoteDataSource: DrinksRemoteDataSource) :
-    DrinkRepository {
+class RemoteRepositoryImpl (private val remoteDataSource: RemoteDataSource) :
+    RemoteRepository {
 
     override suspend fun getRemoteRandomCocktails(): Result<List<Drink>> {
         return remoteDataSource.getRandomDrinks()
@@ -21,5 +21,9 @@ class DrinkRepositoryImpl (private val remoteDataSource: DrinksRemoteDataSource)
 
     override suspend fun getRemoteCocktailById(id: String): Result<List<Drink>> {
         return remoteDataSource.getCocktailById(id)
+    }
+
+    override suspend fun getCocktailByName(query: String): Result<List<Drink>> {
+        return remoteDataSource.searchCocktailByName(query)
     }
 }

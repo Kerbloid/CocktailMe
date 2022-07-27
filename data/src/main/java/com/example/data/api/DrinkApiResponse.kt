@@ -8,7 +8,7 @@ data class Item(
     @SerializedName("dateModified")
     val dateModified: String? = null,
     @SerializedName("idDrink")
-    val id: String? = null,
+    val id: String,
     @SerializedName("strAlcoholic")
     val alcoholic: String? = null,
     @SerializedName("strCategory")

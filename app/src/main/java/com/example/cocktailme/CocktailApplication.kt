@@ -15,7 +15,7 @@ class CocktailApplication: Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@CocktailApplication)
-            modules(appModule, dataModule, domainModule, networkModule)
+            modules(appModule, dataModule, domainModule, networkModule, databaseModule)
         }
     }
 }

@@ -2,7 +2,7 @@ package com.example.domain.entities
 
 data class Drink(
     val dateModified: String? = null,
-    val id: String? = null,
+    val id: String,
     val alcoholic: String? = null,
     val category: String? = null,
     val creativeCommonsConfirmed: String? = null,
